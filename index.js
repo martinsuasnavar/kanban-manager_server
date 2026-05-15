@@ -24,7 +24,12 @@ const app = express();
 
 
 // routes
-app.use(cors()); //local development
+app.use(cors({
+    origin: 'https://panelboard-lite.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+  }));
 /*
 app.use(cors
     {
@@ -43,6 +48,8 @@ app.use('/api', boardRouter);
 app.use('/api', columnRouter);
 app.use('/api', taskRouter);
 app.use('/api', permissionRouter);
+
+
 
 app.get('/', async (req, res) => {
     res.send('Welcome to the back-end port');

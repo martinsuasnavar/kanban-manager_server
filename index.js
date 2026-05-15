@@ -30,6 +30,7 @@ app.use(cors({
 
 app.use(express.json());
 
+
 // Intento de conexión asíncrona al arrancar (sin bloquear con await suelto)
 db.checkDatabaseConnection()
     .then(isConnected => {

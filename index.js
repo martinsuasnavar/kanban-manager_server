@@ -80,8 +80,6 @@ app.get('/api/cron/clean-users', async (req, res) => {
     }
 });
 
-// Programar la tarea (Ejemplo: Todos los días a las 3:00 AM)
-cron.schedule('0 3 * * *', autoDeleteOldUsers);
 
 // Opcional: Ejecutar una vez al arrancar el servidor para limpiar pendientes
 // autoDeleteOldUsers(); 

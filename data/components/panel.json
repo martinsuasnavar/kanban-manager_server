@@ -1,0 +1,32 @@
+[
+  {
+    "panel_name": "TO DO",
+    "parent_project_id": 1,
+    "panel_id": 1
+  },
+  {
+    "panel_name": "DOING",
+    "parent_project_id": 1,
+    "panel_id": 2
+  },
+  {
+    "panel_name": "DONE",
+    "parent_project_id": 1,
+    "panel_id": 3
+  },
+  {
+    "panel_name": "TO DO",
+    "parent_project_id": 2,
+    "panel_id": 4
+  },
+  {
+    "panel_name": "DOING",
+    "parent_project_id": 2,
+    "panel_id": 5
+  },
+  {
+    "panel_name": "DONE",
+    "parent_project_id": 2,
+    "panel_id": 6
+  }
+]

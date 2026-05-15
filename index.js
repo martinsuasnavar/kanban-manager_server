@@ -49,6 +49,7 @@ app.use('/api', taskRouter);
 app.use('/api', permissionRouter);
 
 
+await db.checkDatabaseConnection();
 
 app.get('/', async (req, res) => {
     res.send('Welcome to the back-end port');

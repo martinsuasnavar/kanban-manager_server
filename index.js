@@ -80,3 +80,4 @@ app.get('/api/cron/clean-users', async (req, res) => {
     }
 });
 
+module.exports = app;

@@ -80,13 +80,3 @@ app.get('/api/cron/clean-users', async (req, res) => {
     }
 });
 
-
-// Opcional: Ejecutar una vez al arrancar el servidor para limpiar pendientes
-// autoDeleteOldUsers(); 
-// -------------------------------------
-
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-});

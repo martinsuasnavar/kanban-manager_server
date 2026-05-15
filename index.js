@@ -70,29 +70,15 @@ app.get('/check-db-connection', async (req, res) => {
     }
 });
 
-// --- LÓGICA DE LIMPIEZA AUTOMÁTICA ---
-const autoDeleteOldUsers = async () => {
-    console.log('--- Ejecutando limpieza automática de usuarios desactivados ---');
+app.get('/api/cron/clean-users', async (req, res) => {
+    // Pon aquí la lógica que tenías en autoDeleteOldUsers()
     try {
-        const daysThreshold = 30; // Configurable
-        const limitDate = new Date();
-        limitDate.setDate(limitDate.getDate() - daysThreshold);
-
-        // Filtro: desactivado Y fecha de desactivación más antigua que 30 días
-        const filter = {
-            deactivate: true,
-            deactivationDate: { $lt: limitDate }
-        };
-
-        const deletedCount = await db.remove('user', filter);
-        
-        if (deletedCount > 0) {
-            console.log(`[Cron] Se eliminaron ${deletedCount} usuarios por antigüedad.`);
-        }
+        // ... tu lógica de borrado ...
+        res.status(200).json({ success: true, message: 'Limpieza completada' });
     } catch (error) {
-        console.error('[Cron Error]:', error.message);
+        res.status(500).json({ error: error.message });
     }
-};
+});
 
 // Programar la tarea (Ejemplo: Todos los días a las 3:00 AM)
 cron.schedule('0 3 * * *', autoDeleteOldUsers);

@@ -7,7 +7,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const cron = require('node-cron'); // 1. Importar node-cron
 
 const db = require('./db-module.js');
 const projectRouter = require('./api/routes/project.js');

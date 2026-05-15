@@ -24,7 +24,7 @@ const app = express();
 
 // routes
 app.use(cors({
-    origin: 'https://panelboard-lite.vercel.app',
+    origin: 'https://fieldproject-client.vercel.app/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,

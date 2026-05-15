@@ -1,12 +1,11 @@
 ////////////////////////////////
 // ENTRY FOR POINT /////////////
-// for deployement plataforms //
+// for deployment platforms  ///
 // like Vercel /////////////////
 ////////////////////////////////
 
 const express = require('express');
 const cors = require('cors');
-
 
 const db = require('./db-module.js');
 const projectRouter = require('./api/routes/project.js');
@@ -21,23 +20,24 @@ const permissionRouter = require('./api/routes/permission.js');
 
 const app = express();
 
-
 // routes
 app.use(cors({
-    origin: 'https://fieldproject-client.vercel.app',
+    origin: 'https://fieldproject-client.vercel.app', // Veo que actualizaste el origen, ¡perfecto!
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
-  }));
-/*
-app.use(cors
-    {
-        origin: [""],
-        methods: ["POST", "GET", "DELETE", "PUT"];
-    }
-)
-*/
+}));
+
 app.use(express.json());
+
+// Intento de conexión asíncrona al arrancar (sin bloquear con await suelto)
+db.checkDatabaseConnection()
+    .then(isConnected => {
+        if (isConnected) console.log('Database connected on startup.');
+        else console.log('Database connection pending or lazy-loading.');
+    })
+    .catch(err => console.error('Error in initial DB check:', err.message));
+
 app.use('/api', projectRouter);
 app.use('/api', panelRouter);
 app.use('/api', noteRouter);
@@ -47,9 +47,6 @@ app.use('/api', boardRouter);
 app.use('/api', columnRouter);
 app.use('/api', taskRouter);
 app.use('/api', permissionRouter);
-
-
-await db.checkDatabaseConnection();
 
 app.get('/', async (req, res) => {
     res.send('Welcome to the back-end port');
@@ -72,11 +69,26 @@ app.get('/check-db-connection', async (req, res) => {
 });
 
 app.get('/api/cron/clean-users', async (req, res) => {
-    // Pon aquí la lógica que tenías en autoDeleteOldUsers()
+    console.log('--- Ejecutando limpieza automática de usuarios desactivados ---');
     try {
-        // ... tu lógica de borrado ...
-        res.status(200).json({ success: true, message: 'Limpieza completada' });
+        const daysThreshold = 30; 
+        const limitDate = new Date();
+        limitDate.setDate(limitDate.getDate() - daysThreshold);
+
+        const filter = {
+            deactivate: true,
+            deactivationDate: { $lt: limitDate }
+        };
+
+        const deletedCount = await db.remove('user', filter);
+        
+        if (deletedCount > 0) {
+            console.log(`[Cron] Se eliminaron ${deletedCount} usuarios por antigüedad.`);
+        }
+        
+        res.status(200).json({ success: true, message: `Limpieza completada. Usuarios eliminados: ${deletedCount}` });
     } catch (error) {
+        console.error('[Cron Error]:', error.message);
         res.status(500).json({ error: error.message });
     }
 });

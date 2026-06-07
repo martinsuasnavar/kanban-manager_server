@@ -128,6 +128,11 @@ router.post('/create-permission/:id', async (req, res) => {
   
     console.log(user)
     const userId = user[0].id;
+
+    // no permitir creacion de permiso si el id de usuario coincide con el id encontrado por el formulario
+    if(userId == associated_user_id){
+      return res.status(406).json({ error: 'El dueño del proyecto se esta creando un permiso para si mismo' });
+    }
    // console.log(userId)
     // Verificar si el permiso ya existe para ese usuario y proyecto
     const existingPermissions = await db.getAll('permission');

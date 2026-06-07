@@ -41,6 +41,18 @@ router.get('/columns/:id/tasks', async (req, res) => {
     }
 });
 
+router.put('/tasks/:id/move', async (req, res) => {
+    const task_id = parseInt(req.params.id, 10);
+    const { body: { linked_column_id } } = req.body; //task id
+    try {
+        const task = await db.update('task', { task_id: task_id }, {linked_column_id});
+        res.json(task);
+    } catch (error) {
+        console.error('Error fetching task:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 router.post('/create-task', async (req, res) => {
     const { body: { linked_column_id } } = req.body; //task id
 

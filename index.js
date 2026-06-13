@@ -22,7 +22,7 @@ const app = express();
 
 // routes
 app.use(cors({
-    origin: 'https://fieldproject-client.vercel.app', // Veo que actualizaste el origen, ¡perfecto!
+    origin: 'https://kanbanmanager.vercel.app', // Veo que actualizaste el origen, ¡perfecto!
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,

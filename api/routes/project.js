@@ -113,8 +113,9 @@ router.get('/users/:id/projects', async (req, res) => {
 });
 
 router.post('/create-project', async (req, res) => {
-     const { body: { name } } = req.body;
+    const { body: { name } } = req.body;
     const { body: { associated_user_id } } = req.body;
+    const { body: { desc } } = req.body;
     //agregar ingrso de descripcion
 
     try {
@@ -122,7 +123,7 @@ router.post('/create-project', async (req, res) => {
         const newProjectId = project.length;
 
 
-        await db.create('project', { id: newProjectId, associated_user_id: associated_user_id, name: name, boards: [] });
+        await db.create('project', { id: newProjectId, associated_user_id: associated_user_id, name: name, desc: desc });
          res.status(201);
 
     } catch (error) {
